@@ -1,5 +1,6 @@
 all: prep retrieve unzip write
 
+# Remove the unncessary files from prior runs
 prep:
     rm *.twb
     rm -rf Data
@@ -7,11 +8,14 @@ prep:
     rm covid.zip
     rm hyperd.log
 
+# Find target notebook and download
 retrieve:
     Rscript find_workbook.R
 
+# Unzip the twbx file exposing hyper files
 unzip:
     Rscript break.R
 
+# Read the hyper files and write out the wastewater data
 write:
     python read.py

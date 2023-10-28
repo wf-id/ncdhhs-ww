@@ -1,20 +1,21 @@
+# Purpose: The name of the workbook changes when the data are update
+# This means you need to go to the webpage and find it.
+
 library(tidyverse) 
-#setwd("scrape")
 current_time <- format(Sys.time(), "%Y%m%d%H%M")
-fs::dir_create("out-data")
-cat(getwd())
-print(getwd())
+
+
 # dowload latest file -----------------------------------------------------
 library(rvest)
 library(httr)
 
-ses <-html_session("https://covid19.ncdhhs.gov/dashboard/data-behind-dashboards")
+ses <-session("https://covid19.ncdhhs.gov/dashboard/data-behind-dashboards")
 
 ses %>%
   read_html() %>%
   as.character()->a
 
-
+# Looks for the pattern matching the tableau
 wb_candidates <- unique(str_extract_all(a,pattern = "NCDHHS_COVID-19_DataDownload_Story_\\d+")[[1]])
 
 cat(wb_candidates, sep = "\n")
@@ -27,17 +28,13 @@ cat("Target workbook for this scrape: ", target_wb)
 
 cli::cat_rule()
 
-url_target <- sprintf("https://public.tableau.com/views/%s/DataBehindtheDashboards.twbx",
-                      target_wb)
+# USe this template code
+generate_curl_cal <- glue::glue('
+curl --silent \\\
+  -H "Referer: https://public.tableau.com/app/profile/ncdhhs.covid19data/viz/{target_wb}/DataBehindtheDashboards?:display_static_image=n&:bootstrapWhenNotified=true&:embed=false&:language=en-US&:embed=y&:showVizHome=n&:apiID=host0#navType=2&navSrc=Parse" \\\
+  "https://public.tableau.com/workbooks/{target_wb}.twb" > \\\
+  input/NCDHHS_COVID.twbx
+')
 
-x = httr::GET(url = url_target)
-
-if(status_code(x)!= 200){
-  stop("Could not find workbook")
-}
-
-bin <- httr::content(x, "raw")
-
-writeBin(bin, here::here("input","NCDHHS_COVID.twbx"))
-cat("Success.\n")
-
+# Run the curl call
+system(generate_curl_cal)
