@@ -2,11 +2,11 @@ all: prep retrieve unzip write
 
 # Remove the unncessary files from prior runs
 prep:
-    rm *.twb
+    rm -rf *.twb
     rm -rf Data
     rm -rf Image
-    rm covid.zip
-    rm hyperd.log
+    rm -f covid.zip
+    rm -f hyperd.log
 
 # Find target notebook and download
 retrieve:
