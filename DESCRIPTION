@@ -5,4 +5,5 @@ Imports:
   tidyr,
   rvest,
   httr,
-  purrr
+  purrr,
+  tidyverse
