@@ -1,0 +1,8 @@
+Imports:
+  fs,
+  data.table,
+  dplyr,
+  tidyr,
+  rvest,
+  httr,
+  purrr
