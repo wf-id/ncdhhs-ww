@@ -9,10 +9,10 @@ def read_table(x):
     return pantab.frame_from_hyper(x, table=table)
 
 
-dir_list = os.listdir('data/Extracts')
+dir_list = os.listdir('data')
 
 for file in dir_list:
-    df = read_table(os.path.join('data', 'Extracts', file))
+    df = read_table(os.path.join('data', file))
     
     if df.columns.isin(['wwtp_name']).any():
         file_time = datetime.datetime.now().strftime("%Y-%m-%d_")
