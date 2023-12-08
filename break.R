@@ -16,14 +16,22 @@ str(available_files)
 
 to_extract <- available_files[["Name"]][grepl(available_files[["Name"]], pattern = "hyper")]
 
-unzip("covid.zip", files = to_extract, exdir = "test")
+cli::cli_alert("Now unzipping files")
 
-move_to_local <- fs::dir_ls("test", glob = "*hyper", recurse = TRUE)
+unzip("covid.zip", files = to_extract, exdir = "test")
+cli::cli_alert_success("Files unzipped")
+
+
+move_to_local <- as.vector(fs::dir_ls("test", glob = "*hyper", recurse = TRUE))
 
 if(!fs::dir_exists("data")){
     fs::dir_create("data")
 }
 
-fs::dir_copy(move_to_local, "data")
+str(move_to_local)
 
-unlink("test")
+cli::cli_inform("Moving files")
+fs::file_copy(move_to_local, "data")
+cli::cli_alert_success("Moved!")
+
+fs::dir_delete("test")
