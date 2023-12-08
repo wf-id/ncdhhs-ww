@@ -73,7 +73,7 @@ jobs:
       - name: Run scraping
         run: |
           just all
-          just just prep
+          just prep
 
     #   - name: Run script
     #     env:
