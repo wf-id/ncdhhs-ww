@@ -6,4 +6,6 @@ Imports:
   rvest,
   httr,
   purrr,
-  tidyverse
+  tidyverse,
+  here,
+  zoo
