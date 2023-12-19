@@ -1,8 +1,8 @@
 if(dir.exists(here::here("data"))){
     cat("Previous files existing. Removing\n")
-    fs::dir_delete(here::here("data"))
-    fs::dir_delete(here::here("image"))
-    fs::file_delete("covid.zip")
+    try(fs::dir_delete(here::here("data")))
+    try(fs::dir_delete(here::here("image")))
+    try(fs::file_delete("covid.zip"))
 }
 
 
@@ -34,4 +34,6 @@ cli::cli_inform("Moving files")
 fs::file_copy(move_to_local, "data")
 cli::cli_alert_success("Moved!")
 
-fs::dir_delete("test")
+if(dir.exists("test")){
+  fs::dir_delete("test")
+}

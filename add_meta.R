@@ -1,3 +1,7 @@
+library(EpiSewer)
+library(data.table)
+
+
 get_nc_ww <- function(counties = NULL){
     dat_raw <- data.table::fread(here::here("output", "latest.csv"))
 
@@ -21,14 +25,10 @@ o <- get_nc_ww()
 
 data.table::fwrite(o, here::here("output", "ncww.csv"))
 
-48863073/119582.61
 
 dat_raw <- data.table::fread(here::here("output", "latest.csv"))
 dat_raw[,smooth_normalised := data.table::frollmean(sars_cov2_normalized, 3), by = "county_names"]
 dat_raw[,flow := sars_cov2_normalized*population_served/sars_cov2_raw_copiesL]
-
-library(EpiSewer)
-library(data.table)
 
 dat_raw <- data.table::fread(here::here("output", "latest.csv"))
 dat_raw[,smooth_normalised := data.table::frollmean(sars_cov2_normalized, 3), by = "county_names"]
