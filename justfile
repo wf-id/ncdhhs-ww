@@ -25,3 +25,5 @@ unzip:
 write:
     echo "Reading hyper files and extracting latest"
     python read.py
+    echo "Add meta data"
+    Rscript add_meta_only.R
