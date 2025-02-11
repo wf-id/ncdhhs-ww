@@ -12,8 +12,11 @@ def read_table(x):
 dir_list = os.listdir('data')
 
 for file in dir_list:
-    df = read_table(os.path.join('data', file))
-    print(df.columns)
+    try:
+        df = read_table(os.path.join('data', file))
+        print(df.columns)
+    except TypeError:
+    pass
     
     if df.columns.isin(['wwtp_name']).any():
         file_time = datetime.datetime.now().strftime("%Y-%m-%d_")
